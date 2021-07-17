@@ -1,0 +1,20 @@
+server:
+  port: 8033
+
+spring:
+  datasource:                                           # 数据源的相关配置
+    type: com.zaxxer.hikari.HikariDataSource          # 数据源类型：HikariCP
+    #    driver-class-name: com.mysql.cj.jdbc.Driver          # mysql驱动
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/foodie-shop-dev ?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true
+    username: root
+  redis:
+    #Redis 的单机单实例
+    database: 1
+    host: 192.168.163.155
+    port: 6379
+    password: imooc
+  data:
+    elasticsearch:
+      cluster-nodes: 192.168.163.140:9300
+      cluster-name: es6
