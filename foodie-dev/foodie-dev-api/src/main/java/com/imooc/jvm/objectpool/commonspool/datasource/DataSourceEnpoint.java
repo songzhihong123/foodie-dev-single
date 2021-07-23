@@ -22,7 +22,7 @@ public class DataSourceEnpoint {
 
     @ReadOperation
     public Map<String , Object> pool(){
-        GenericObjectPool<Connection> pool = dataSource.getPool();
+        GenericObjectPool<MyConnection> pool = dataSource.getPool();
         HashMap<String, Object> map = Maps.newHashMap();
         map.put("numActive",pool.getNumActive());
         map.put("numIdie",pool.getNumIdle());

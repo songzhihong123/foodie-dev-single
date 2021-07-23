@@ -11,17 +11,19 @@ import java.util.logging.Logger;
 
 public class DMDataSource implements DataSource {
 
-    private GenericObjectPool<Connection> pool;
+    private GenericObjectPool<MyConnection> pool;
 
     public DMDataSource(){
-        this.pool = new GenericObjectPool<>(new ConnectionPooledObjectFactory());
+        ConnectionPooledObjectFactory factory = new ConnectionPooledObjectFactory();
+        this.pool = new GenericObjectPool<>(factory);
+        factory.setObjectPool(pool);
     }
 
-    public GenericObjectPool<Connection> getPool() {
+    public GenericObjectPool<MyConnection> getPool() {
         return pool;
     }
 
-    public void setPool(GenericObjectPool<Connection> pool) {
+    public void setPool(GenericObjectPool<MyConnection> pool) {
         this.pool = pool;
     }
 

@@ -1,5 +1,7 @@
 package com.imooc.jvm.objectpool.commonspool.datasource;
 
+import org.apache.commons.pool2.ObjectPool;
+
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
@@ -16,6 +18,16 @@ public class MyConnection implements Connection {
     private Connection connection;
 
     private Statement statement;
+
+    private ObjectPool<MyConnection> objectPool;
+
+    public ObjectPool<MyConnection> getObjectPool() {
+        return objectPool;
+    }
+
+    public void setObjectPool(ObjectPool<MyConnection> objectPool) {
+        this.objectPool = objectPool;
+    }
 
     public Connection getConnection() {
         return connection;
@@ -40,7 +52,10 @@ public class MyConnection implements Connection {
 
     @Override
     public PreparedStatement prepareStatement(String sql) throws SQLException {
-        return this.connection.prepareStatement(sql);
+        PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+        this.statement = preparedStatement;
+        return preparedStatement;
+
     }
 
     @Override
@@ -75,7 +90,20 @@ public class MyConnection implements Connection {
 
     @Override
     public void close() throws SQLException {
-        this.connection.close();
+        if(this.isClosed()){
+            try {
+                objectPool.invalidateObject(this);
+            } catch (Exception exception) {
+               throw new SQLException(exception);
+            }
+        }else{ // 说明底层Connection没有关闭，可以继续使用
+            try {
+                objectPool.returnObject(this);
+            } catch (Exception exception) {
+                this.connection.close();
+                throw new SQLException(exception);
+            }
+        }
     }
 
     @Override

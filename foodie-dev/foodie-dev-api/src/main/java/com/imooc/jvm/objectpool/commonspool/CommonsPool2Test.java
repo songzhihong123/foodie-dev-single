@@ -2,7 +2,9 @@ package com.imooc.jvm.objectpool.commonspool;
 
 import org.apache.commons.pool2.impl.GenericObjectPool;
 
-
+/**
+ * @author szh
+ */
 public class CommonsPool2Test {
 
     public static void main(String[] args) throws Exception {
