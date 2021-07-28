@@ -1,0 +1,5 @@
+1. 下载windows版本的Lua脚本，下载地址：http://joedf.ahkscript.org/LuaBuilds/
+2.解压至无中文目录
+3.LDEA下载Lua脚本插件,重启IDEA
+4.在File -> Project Structure -> SDK 添加sdk，然后指定刚才解压的Lua的目录
+5.初体验Lua     hello lua

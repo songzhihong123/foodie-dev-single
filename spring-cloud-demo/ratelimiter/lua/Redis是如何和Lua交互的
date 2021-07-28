@@ -1,0 +1,24 @@
+    在redis-cli里面执行Lua脚本
+    公式：eval script numkeys key [key ...] args [args]
+    例子：
+        无参数：eval "return 'hello redis+lua'" 0
+        有参数 eval "return {KEYS[1] ARGV[1]}" 2 K1 K2 V1 V2
+    redis预加载Lua脚本
+    公式：script load script
+        例子：
+            无参数：
+                定义：script load "return 'hello redis+lua'" 返回一个序列
+                调用：evalsha "序列"
+            有参数：
+                定义：script load "return 'hello redis' ..KEYS[1]" 返回一个序列
+                调用：evalsha "序列" 1 key1
+            判断预加载的是否存在？
+                调用：script exists "序列"
+            删除预加载的lua脚本：
+                调用：script flush
+
+
+
+
+
+
